@@ -1,6 +1,6 @@
 import useWeb3Instance from "./useWeb3";
 import ERC20ABI from "../abis/ERC20.json";
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 import { ERC20_ADDRESS } from "../utils/addresses";
 import Web3 from "web3";
 
