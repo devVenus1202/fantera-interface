@@ -1,6 +1,6 @@
 import useWeb3Instance from "./useWeb3";
 import ERC20ABI from "../abis/ERC20.json";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ERC20_ADDRESS } from "../utils/addresses";
 import BigNumber from 'bignumber.js';
 import { fromWei, toWei } from "../utils/helper";
@@ -13,8 +13,10 @@ export default function useApprove(spenderAddress) {
     console.log("toWei(amount)",toWei(amount))
     erc20Contract.methods.approve(spenderAddress, toWei(amount)).send({from: account});
   },[])
-  erc20Contract.methods.allowance(spenderAddress,account)
+  useEffect(() => {
+    erc20Contract.methods.allowance(account,spenderAddress)
     .call()
     .then(res => setAllowance(fromWei(res)));
+  }, [])
   return {allowance, approve};
 }

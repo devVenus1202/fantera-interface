@@ -16,13 +16,15 @@ function App() {
 
       case "notConnected":
         return (
-          <Button
-            color="fantra"
-            title="Click to connect wallet"
-            onClick={connectWallet}
-          >
-            Connect Wallet
-          </Button>
+          <div className="connect-wallet">
+            <Button 
+              color="fantra"
+              title="Click to connect wallet"
+              onClick={connectWallet}
+            >
+              Connect Wallet
+            </Button>
+          </div>
         );
 
       case "connecting":
@@ -41,6 +43,7 @@ function App() {
 
   return (
     <div className="App">
+      <h1>Fantera Collection</h1>
       {renderWalletButton()}
     </div>
   );

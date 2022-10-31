@@ -11,21 +11,6 @@
     "type": "constructor"
   },
   {
-    "inputs": [],
-    "name": "CapExceed",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "InvalidAddress",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "InvalidAmount",
-    "type": "error"
-  },
-  {
     "anonymous": false,
     "inputs": [
       {
