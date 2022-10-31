@@ -20,6 +20,6 @@ export default function useMintErc20() {
     .then(()=>{
       setMinting(false);
     });
-  },[])
+  },[account, web3Instance.eth.Contract])
   return {mintErc20, minting, error};
 }

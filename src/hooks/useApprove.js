@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import useWeb3Instance from "./useWeb3";
 import ERC20ABI from "../abis/ERC20.json";
 import { useCallback, useEffect, useState } from "react";
@@ -12,11 +13,11 @@ export default function useApprove(spenderAddress) {
   const approve = useCallback((amount) => {
     console.log("toWei(amount)",toWei(amount))
     erc20Contract.methods.approve(spenderAddress, toWei(amount)).send({from: account});
-  },[])
+  },[account, spenderAddress])
   useEffect(() => {
     erc20Contract.methods.allowance(account,spenderAddress)
     .call()
     .then(res => setAllowance(fromWei(res)));
-  }, [])
+  }, [account, spenderAddress])
   return {allowance, approve};
 }

@@ -53,7 +53,7 @@ export default function Mint() {
             Approve FANT(1000)
           </Button>:<Button
             title="Click to disconnect wallet"
-            onClick={() => setShowUploader(true)}
+            onClick={() => setShowUploader(!showUploader)}
             icon="prefix-icon"
           >
             Mint with 100 FANT

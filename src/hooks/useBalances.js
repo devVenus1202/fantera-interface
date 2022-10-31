@@ -12,7 +12,8 @@ export default function useBalance(status) {
     erc20Contract.methods.balanceOf(account)
       .call()
       .then(res => setBalance(fromWei(res)));
-  }, [status])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [account, status])
  
   return {balance};
 }

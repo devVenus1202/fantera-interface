@@ -20,9 +20,9 @@ export default function useMintNFT(){
       })
       .then(res => {
         setMinting(false);
-        if (onSuccess) onSuccess();
+        if (onSuccess) onSuccess(res);
       });
     });
-  },[])
+  },[account, web3Instance.eth.Contract])
   return {mintErc721, minting, error};
 }
