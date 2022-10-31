@@ -9,35 +9,54 @@ import useBalance from '../hooks/useBalances';
 import useMintErc20 from '../hooks/useMintErc20';
 import { ERC721_ADDRESS } from '../utils/addresses';
 
-
+let forceUpdate = 0;
 export default function Mint() {
   const [showUploader, setShowUploader] = useState(false);
-  const {mintErc20 : mintErc20Token, minting: mintingErc20} = useMintErc20();
-  const {balance} = useBalance(mintingErc20)
-  const {allowance, approve} = useApprove(ERC721_ADDRESS);
+  const [approving, setApproving] = useState(false);
+  const [minting, setMinting] = useState(false);
+
+  const {mintErc20 : mintErc20Token} = useMintErc20();
+  const {balance, collectionBalance} = useBalance(forceUpdate);
+  const {allowance, approve} = useApprove(ERC721_ADDRESS, forceUpdate);
   const getToken = () => {
-    mintErc20Token(1000);
+    setMinting(true);
+    mintErc20Token(1000)
+    .then(() => {
+      setMinting(false); 
+      forceUpdate++;
+    })
+    .catch(() => setMinting(false));;
   }
   const approveToken = () => {
-    approve(1000);
+    setApproving(true);
+    approve(1000)
+      .then(() => {
+        setApproving(false); 
+        forceUpdate++;
+      })
+      .catch(() => setApproving(false));
   }
   const completeMint = () => {
-
+    setShowUploader(false);
+    forceUpdate ++;
   }
   return (
     <div className='mint'>
       <div>
         FANT(Fantera Token) : {balance}
       </div>
+      <div>
+        FANTC(Fantera Collection) : {collectionBalance}
+      </div>
       <div className='action-bar'>
-        {!mintingErc20 && <Button
+        {!minting && <Button
           title="Click to obtain FANT token"
           onClick={getToken}
           icon="prefix-icon"
         >
           Obtain 1000 FANT
         </Button>}
-        {mintingErc20 && <Button
+        {minting && <Button
           title="Click to obtain FANT token"
           icon="prefix-icon"
           disabled
@@ -45,12 +64,13 @@ export default function Mint() {
           Confirming <LoadingSpinner/>
         </Button>}
        
-        {allowance === '0' ? <Button
+        {Number(allowance) < 100 ? <Button
             title="Click to disconnect wallet"
-            onClick={approveToken}
+            onClick={approving?()=>{}:approveToken}
             icon="prefix-icon"
           >
-            Approve FANT(1000)
+            {approving?"Confirming transaction...":"Approve FANT(1000)"}
+            {approving && <LoadingSpinner/>}
           </Button>:<Button
             title="Click to disconnect wallet"
             onClick={() => setShowUploader(!showUploader)}

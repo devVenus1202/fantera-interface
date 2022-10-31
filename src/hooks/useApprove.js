@@ -6,18 +6,18 @@ import { ERC20_ADDRESS } from "../utils/addresses";
 import BigNumber from 'bignumber.js';
 import { fromWei, toWei } from "../utils/helper";
 
-export default function useApprove(spenderAddress) {
+export default function useApprove(spenderAddress, updateFlag) {
   const {web3Instance, account} = useWeb3Instance();
   const [allowance, setAllowance] = useState(new BigNumber(0));
   const erc20Contract = new web3Instance.eth.Contract(ERC20ABI, ERC20_ADDRESS);
   const approve = useCallback((amount) => {
     console.log("toWei(amount)",toWei(amount))
-    erc20Contract.methods.approve(spenderAddress, toWei(amount)).send({from: account});
+    return erc20Contract.methods.approve(spenderAddress, toWei(amount)).send({from: account});
   },[account, spenderAddress])
   useEffect(() => {
     erc20Contract.methods.allowance(account,spenderAddress)
     .call()
     .then(res => setAllowance(fromWei(res)));
-  }, [account, spenderAddress])
+  }, [account, spenderAddress, updateFlag])
   return {allowance, approve};
 }

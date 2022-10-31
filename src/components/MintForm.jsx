@@ -2,6 +2,7 @@ import React, { useReducer, useState } from 'react'
 import useMintNFT from '../hooks/useMintNFT';
 import { pinToIPFS } from '../utils/post';
 import Button from './Button';
+import LoadingSpinner from './LoadingSpinner';
 
 const initialState = {
   name: "",
@@ -13,13 +14,15 @@ const initialState = {
 function reducer(state, action) {
   switch (action.type) {
     case 'setName':
-      return {name: action.payload};
+      return {...state, name: action.payload};
     case 'setDescription':
-      return {description: action.payload};
+      return {...state, description: action.payload};
     case 'setFile':
-      return {file: action.payload};
+      return {...state, file: action.payload};
     case 'setUri':
-      return {uri: action.payload}
+      return {...state, uri: action.payload}
+    case 'init': 
+      return {...initialState}
     default:
       throw new Error();
   }
@@ -65,6 +68,7 @@ export default function MintForm({onCompleted}) {
     setUploading(false);
     mintErc721(metahash,
       () => {
+        dispatch({type: "init"})
         if (onCompleted) onCompleted()
       },
     )
@@ -79,8 +83,8 @@ export default function MintForm({onCompleted}) {
         <textarea value={state.description} onChange={e=>dispatch({type:"setDescription", payload: e.target.value})}/>
         <label>File</label>
         <input type="file" onChange={(e) =>setFileImg(e.target.files[0])} required />
-        {minting && <Button>Confimring transaction...</Button>}            
-        {uploading && <Button>Uploading image to IPFS...</Button>}
+        {minting && <Button>Confimring transaction...<LoadingSpinner/></Button>}            
+        {uploading && <Button>Uploading image to IPFS...<LoadingSpinner/> </Button>}
         {!minting && !uploading && <Button type="submit">Mint</Button>}
       </form>
     </div>

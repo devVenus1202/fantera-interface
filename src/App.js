@@ -3,6 +3,7 @@ import Button from './components/Button';
 import LoadingSpinner from './components/LoadingSpinner';
 import Mint from './components/Mint';
 import useWeb3Instance from './hooks/useWeb3';
+import { ERC20_ADDRESS, ERC721_ADDRESS } from './utils/addresses';
 
 function App() {
   const {status, connectWallet} = useWeb3Instance();
@@ -44,6 +45,12 @@ function App() {
   return (
     <div className="App">
       <h1>Fantera Collection</h1>
+      <div>
+        Token(FANT) address: {ERC20_ADDRESS}
+      </div>
+      <div>
+        Collection(FANTC) address: {ERC721_ADDRESS}
+      </div>
       {renderWalletButton()}
     </div>
   );
