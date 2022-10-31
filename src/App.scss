@@ -1,0 +1,29 @@
+@charset "UTF-8";
+
+/* Settings */
+@import 'assets/styles/settings/_settings.px.scss'; // Settings - Px
+@import 'assets/styles/settings/_settings.colours.scss'; // Settings - Colours
+@import 'assets/styles/settings/_settings.common.scss'; // Settings - Common
+@import 'assets/styles/settings/_settings.fonts.scss'; // Settings - Fonts
+@import 'assets/styles/settings/_settings.mixins.scss'; // Settings - Mixins
+
+/* Components */
+@import 'assets/styles/components.button'; // Components - Button
+@import 'assets/styles/components.loading'; // Components - Loader
+
+/* #BASE - BASE */
+html {
+  @include font-smoothing(antialiased);
+  font-family: $FONT_MEDIUM;
+  font-weight: 400;
+}
+body {
+  background-color: $BLACK_BASE;
+  text-rendering: optimizeLegibility;
+  line-height: 1.75;
+  color: white;
+}
+a {
+  color: $WHITE_800;
+  text-decoration: none;
+}
