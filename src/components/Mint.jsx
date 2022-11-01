@@ -48,6 +48,7 @@ export default function Mint() {
       <div>
         FANTC(Fantera Collection) : {collectionBalance}
       </div>
+
       <div className='action-bar'>
         {!minting && <Button
           title="Click to obtain FANT token"
